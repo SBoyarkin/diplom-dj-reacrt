@@ -1,0 +1,50 @@
+.main {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    background-image: url("../../assets/bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.left {
+    background-color: #242424;
+    opacity: 0.5;
+    width: 100%;
+}
+
+.right {
+    background-color: #242424;
+    opacity: 0.9;
+    width: 44%;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    margin: 10%;
+}
+
+.title {
+    text-align: center;
+    color: white;
+}
+
+.input {
+    margin-bottom: 0.5em;
+    height: 1.5em;
+}
+
+.input:hover {
+        background-color: rgb(202, 225, 255);
+}
+
+.btn {
+    background-color: #888888;
+    border-radius: 0.5em;
+}
+
+.btn:hover {
+    background-color: rgba(136, 145, 255, 0.92);
+}
