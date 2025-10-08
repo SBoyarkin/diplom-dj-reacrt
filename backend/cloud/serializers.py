@@ -3,12 +3,6 @@ from .models import File
 class FileViewSetSerializer(serializers.ModelSerializer):
     class Meta:
         model = File
-        fields = '__all__'
-        read_only_fields = ('name', 'unique_name', 'url',)
+        fields = ['name','size','date_uploaded','date_downloaded','pub_url','file','comment','owner', 'url']
+        read_only_fields = ('name', 'pub_url', 'size', 'date_downloaded', 'owner')
 
-    def create(self, validated_data):
-        name = validated_data.get('file')
-        validated_data['name'] = name
-        print(name)
-        print(validated_data)
-        return super().create(validated_data)

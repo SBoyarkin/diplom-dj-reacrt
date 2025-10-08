@@ -3,10 +3,8 @@ from django.db import models
 
 
 def user_directory_path(instance, filename):
-
     if hasattr(instance, 'user'):
         user_id = instance.user.id
-
     elif isinstance(instance, User):
         user_id = instance.id
     else:
@@ -15,11 +13,21 @@ def user_directory_path(instance, filename):
 
 class File(models.Model):
     name = models.CharField(max_length=255)
-    unique_name = models.CharField(max_length=255)
-    url = models.URLField(max_length=255, blank=True,)
+    size = models.IntegerField()
+    date_uploaded = models.DateTimeField(auto_now_add=True)
+    date_downloaded = models.DateTimeField(blank=True, null=True)
+    pub_url = models.URLField(max_length=255, blank=True,)
     file = models.FileField(upload_to=user_directory_path)
     comment = models.TextField(blank=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        if self.file:
+            if not self.name:
+                self.name = self.file.name
+            if not self.size:
+                self.size = self.file.size
+        super().save(*args, **kwargs)
 
 
 # Create your models here.
