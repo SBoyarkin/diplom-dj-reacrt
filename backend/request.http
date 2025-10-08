@@ -15,7 +15,7 @@ Authorization: Token 0093f6b1ac92314547fea1abd82aafa7f67ee0b2
 
 ###
 
-POST http://localhost:8000/auth/jwt/create/
+POST http://localhost:8000/auth/token/login/
 Content-Type: application/json
 
 {

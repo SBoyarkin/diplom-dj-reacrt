@@ -11,7 +11,6 @@ def user_directory_path(instance, filename):
         user_id = instance.id
     else:
         user_id = 'unknown'
-
     return f'uploads/{user_id}/{filename}'
 
 class File(models.Model):
