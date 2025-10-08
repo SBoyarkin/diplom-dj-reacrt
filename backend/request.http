@@ -1,0 +1,24 @@
+###All
+GET http://localhost:8000/cloud/files/
+
+
+
+###Test
+GET http://localhost:8000/cloud/files/
+Authorization: Token f0159f971b4f3df7f017e1e162ad4556a318f2cc
+
+
+
+###Admin
+GET http://localhost:8000/cloud/files/
+Authorization: Token 0093f6b1ac92314547fea1abd82aafa7f67ee0b2
+
+###
+
+POST http://localhost:8000/auth/jwt/create/
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "admin"
+}
