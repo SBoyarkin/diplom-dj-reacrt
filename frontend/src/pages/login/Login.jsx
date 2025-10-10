@@ -3,6 +3,7 @@ import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
 import {decrement, increment} from "../../features/counterSlice.js";
 import {setToken, removeToken} from "../../features/tokenSlice.js";
+import {Link} from "react-router";
 export const Login = () => {
     const count = useSelector((state) => state.counter.value)
     const dispatch = useDispatch()
@@ -16,7 +17,6 @@ export const Login = () => {
         axios.post('http://127.0.0.1:8000/auth/token/login', obj)
             .then(response => {if ( response.status === 200) {
                 console.log(response.data.auth_token)
-                localStorage.setItem('token', response.data)
                 dispatch(setToken(response.data.auth_token))
 
             }})
@@ -70,7 +70,7 @@ export const Login = () => {
                         <input name='username' className={S.input} type='text'/>
                         <input name='password' className={S.input} type='text'/>
                         <button className={S.btn} type="submit">Войти</button>
-                        <a>Регистрация</a>
+                        <Link to={'/sign'}>Регистрация</Link>
                     </form>
                 </div>
             </div>
