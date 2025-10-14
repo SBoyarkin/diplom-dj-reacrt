@@ -4,7 +4,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {decrement, increment} from "../../features/counterSlice.js";
 import {setToken, removeToken} from "../../features/tokenSlice.js";
 import {Link} from "react-router";
+import {useNavigate} from "react-router";
+
 export const Login = () => {
+    const navigate = useNavigate()
     const count = useSelector((state) => state.counter.value)
     const dispatch = useDispatch()
     const token = useSelector((state) => state.token.value)
@@ -18,7 +21,7 @@ export const Login = () => {
             .then(response => {if ( response.status === 200) {
                 console.log(response.data.auth_token)
                 dispatch(setToken(response.data.auth_token))
-
+                navigate('/main', { replace: true });
             }})
     }
 

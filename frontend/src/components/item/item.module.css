@@ -1,0 +1,10 @@
+.item {
+    display: block;
+        border-right: 50px;
+
+}
+
+.item:hover {
+    background-color: #2b669a;
+        border-right: 50px;
+}

@@ -1,15 +1,17 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+from backend.utils import get_config
+
 
 def user_directory_path(instance, filename):
-    if hasattr(instance, 'user'):
-        user_id = instance.user.id
+    if hasattr(instance, 'owner'):
+        user_id = instance.owner.id
     elif isinstance(instance, User):
         user_id = instance.id
     else:
         user_id = 'unknown'
-    return f'uploads/{user_id}/{filename}'
+    return f'{get_config().get("path", "save_url")}/{user_id}/{filename}'
 
 class File(models.Model):
     name = models.CharField(max_length=255)
