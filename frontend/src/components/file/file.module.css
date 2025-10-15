@@ -1,0 +1,22 @@
+.file {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 120px;
+    width: 100px;
+    display: block;
+    margin: 5px;
+    text-align: center;
+    user-select: none;
+    border-radius: 5px;
+}
+
+.file:hover {
+    background-color: rgba(129, 163, 250, 0.09);
+}
+
+.name {
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

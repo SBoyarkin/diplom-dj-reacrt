@@ -1,4 +1,7 @@
 .menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     background-color: rgba(0, 0, 0, 0.07);
     min-width: 300px;
     padding: 20px;
