@@ -12,7 +12,7 @@ export const File = ({props}) => {
         const url = window.URL.createObjectURL(response.data);
         const link = document.createElement('a');
         link.href = url;
-        link.download = name; // Используем переданное имя файла
+        link.download = name;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);

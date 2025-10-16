@@ -14,9 +14,12 @@ export const Space = () => {
         [])
   return(
       <>
+          <div className={S.logout}>logout</div>
           <div className={S.space}>
+
+
               {files.map((i) => <File props={i}/>)}
-              </div>
+          </div>
       </>
   )
 }

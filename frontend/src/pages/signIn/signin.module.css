@@ -1,0 +1,29 @@
+.form {
+    text-align: center;
+    height: 40vh;
+    background-color: #7F8177;
+    border-radius: 10px;
+    width: 30vw;
+}
+
+.inp {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.itext {
+    margin-top: 5px;
+    width: 25vw;
+}
+
+.sign {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    text-align: center;
+    align-items: center;
+
+}
