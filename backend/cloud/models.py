@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -31,5 +33,8 @@ class File(models.Model):
                 self.size = self.file.size
         super().save(*args, **kwargs)
 
+    def update_download_date(self):
+        self.date_downloaded = datetime.now()
+        self.save()
 
 # Create your models here.

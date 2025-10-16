@@ -1,10 +1,13 @@
 from django.shortcuts import render
 from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from django.http import HttpResponse
+import os
 
 from .serializers import FileViewSetSerializer
 from .models import File
 from rest_framework.permissions import IsAuthenticated
-
 from .permissions import IsOwnerOrAdmin
 
 
@@ -17,14 +20,20 @@ class FileViewSet(viewsets.ModelViewSet):
         serializer.save(owner=self.request.user)
 
     def get_queryset(self):
-        print(dir(self.request.user))
         if self.request.user.is_authenticated:
             if self.request.user.is_superuser:
                 return File.objects.all()
             else:
                 return File.objects.filter(owner=self.request.user)
 
-
-
-
-# Create your views here.
+    @action(detail=True, methods=['get'])
+    def download(self, request, pk=None):
+        file_obj = self.get_object()
+        file_handle = file_obj.file.open('rb')
+        response = HttpResponse(file_handle, content_type='application/octet-stream')
+        filename = file_obj.name
+        response['Content-Disposition'] = f'attachment; filename="{filename}"'
+        print(filename)
+        response['Content-Length'] = file_obj.file.size
+        file_obj.update_download_date()
+        return response
