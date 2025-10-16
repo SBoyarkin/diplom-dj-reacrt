@@ -1,0 +1,16 @@
+.details {
+    background-color: #c8c8c8;
+    height: 50%;
+    min-width: 20%;
+    max-width: 20%;
+    position: absolute;
+    inset-inline-end: 40px;
+    inset-block-end: 40px;
+    border-radius: 10px;
+    box-shadow: 10px 5px 5px #6a6a6a;
+    padding: 20px;
+}
+
+.title {
+
+}

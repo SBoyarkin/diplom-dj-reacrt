@@ -1,10 +1,13 @@
 import S from './file.module.css'
 import {apiClient} from "../../customRequest.js";
-import axios from "axios";
+import {useDispatch} from "react-redux";
+import {setFile} from "../../features/fileSlice.js";
+
 export const File = ({props}) => {
     const {name, id, download_url} = props
+    const dispatch = useDispatch()
 
-    const save = (e) => {
+    const save = () => {
     apiClient.get(download_url, {
         responseType: 'blob'
     })
@@ -20,12 +23,21 @@ export const File = ({props}) => {
     })
     .catch(error => {
         console.error('Download error:', error);
-    });
-}
+    });}
+
+    const selectFile = (e) => {
+        console.log(e.currentTarget)
+        const id = e.currentTarget.id
+        console.log(id)
+        dispatch(setFile(id))
+
+    }
+
 
     return(
         <>
-            <div className={S.file} key={id} onDoubleClick={save}>
+            <div className={S.file} id={id} onClick={selectFile} onDoubleClick={save}>
+                <b>{id}</b>
                 <div>Иконка</div>
                 <div className={S.name}>{name}</div>
             </div>

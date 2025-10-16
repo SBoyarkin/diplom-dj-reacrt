@@ -8,6 +8,8 @@ export const User = () => {
     const dispatch = useDispatch()
     const user = useSelector(state => state.user)
     const token = useSelector(state => state.token)
+
+
     useEffect(() => {
         if (token !== null) {
         apiClient.get('/auth/users/me/')
@@ -19,8 +21,6 @@ export const User = () => {
     return(
         <>
             <div className={S.user_btn}>
-                <div>{ user.id}</div>
-                <div>{ user.email}</div>
                 <div>{ user.username}</div>
             </div>
         </>
