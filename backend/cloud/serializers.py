@@ -5,7 +5,7 @@ class FileViewSetSerializer(serializers.ModelSerializer):
     download_url = serializers.SerializerMethodField()
     class Meta:
         model = File
-        fields = ['id', 'name','size','date_uploaded','date_downloaded','pub_url','comment','owner', 'download_url']
+        fields = ['id', 'name','size','date_uploaded','date_downloaded','pub_url', 'file', 'comment','owner', 'download_url']
         read_only_fields = ('id', 'name', 'pub_url', 'size', 'date_downloaded', 'owner')
 
     def get_download_url(self, obj):
