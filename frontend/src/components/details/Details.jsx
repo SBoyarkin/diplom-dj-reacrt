@@ -7,11 +7,24 @@ import {useEffect, useState} from "react";
 export const Details = () => {
     const [fileInfo, fileInfoHandler] = useState({})
     const selector = useSelector((state) => state.file.value)
-    useEffect(() => {
-
-        apiClient.get(`/cloud/files/${selector}`).then(
+    const updateComment = (e) => {
+        e.preventDefault()
+        const formData = new FormData(e.target)
+        const entries = formData.entries()
+        const obj = Object.fromEntries(entries)
+        apiClient.put(`/cloud/files/${selector}/`, obj)
+            .then(response => {console.log(response)
+            if (response.statusText === 'OK') {
+                apiClient.get(`/cloud/files/${selector}`).then(
         response => {fileInfoHandler(response.data)})
 
+            }
+            })
+    }
+
+    useEffect(() => {
+        const getItem = apiClient.get(`/cloud/files/${selector}`).then(
+        response => {fileInfoHandler(response.data)})
     }, [selector])
     if (selector) {
     return(
@@ -21,6 +34,10 @@ export const Details = () => {
             <div className={S.title}>Имя файла: {fileInfo.name}</div>
             <div> Размер файла: {fileInfo.size}</div>
             <div> { (fileInfo.comment)}</div>
+            <form onSubmit={updateComment}>
+                <input name='comment'></input>
+                <button>Сохранить</button>
+            </form>
 
         </div>
 

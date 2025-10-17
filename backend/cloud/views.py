@@ -1,9 +1,9 @@
-from django.shortcuts import render
+
 from rest_framework import viewsets
 from rest_framework.decorators import action
-from rest_framework.response import Response
+
 from django.http import HttpResponse
-import os
+
 
 from .serializers import FileViewSetSerializer
 from .models import File
@@ -37,3 +37,5 @@ class FileViewSet(viewsets.ModelViewSet):
         response['Content-Length'] = file_obj.file.size
         file_obj.update_download_date()
         return response
+
+
