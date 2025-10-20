@@ -1,14 +1,14 @@
-
-from rest_framework import viewsets
+from rest_framework.response import Response
+from rest_framework import viewsets, status
 from rest_framework.decorators import action
 
 from django.http import HttpResponse
 
 
-from .serializers import FileViewSetSerializer
-from .models import File
+from .serializers import FileViewSetSerializer, RegistrationSerializer
+from .models import File, CustomUser
 from rest_framework.permissions import IsAuthenticated
-from .permissions import IsOwnerOrAdmin
+from .permissions import IsOwnerOrAdmin, IsAdmin
 
 
 class FileViewSet(viewsets.ModelViewSet):
@@ -38,4 +38,16 @@ class FileViewSet(viewsets.ModelViewSet):
         file_obj.update_download_date()
         return response
 
+
+class RegistrationViewSet(viewsets.ModelViewSet):
+    queryset = CustomUser.objects.all()
+    serializer_class = RegistrationSerializer
+
+    def create(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            print(serializer.validated_data)
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

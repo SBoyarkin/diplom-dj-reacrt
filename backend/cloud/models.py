@@ -1,29 +1,33 @@
 from datetime import datetime
 
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.db import models
-
 from backend.utils import get_config
 
 
 def user_directory_path(instance, filename):
     if hasattr(instance, 'owner'):
         user_id = instance.owner.id
-    elif isinstance(instance, User):
+    elif isinstance(instance, CustomUser):
         user_id = instance.id
     else:
         user_id = 'unknown'
     return f'{get_config().get("path", "save_url")}/{user_id}/{filename}'
 
+class CustomUser(AbstractUser):
+    login = models.CharField(max_length=255, unique=True)
+
+
+
 class File(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, blank=True)
     size = models.IntegerField()
     date_uploaded = models.DateTimeField(auto_now_add=True)
     date_downloaded = models.DateTimeField(blank=True, null=True)
     pub_url = models.URLField(max_length=255, blank=True,)
     file = models.FileField(upload_to=user_directory_path)
     comment = models.TextField(blank=True)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
         if self.file:

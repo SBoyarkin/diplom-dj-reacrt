@@ -64,6 +64,7 @@ export const Login = () => {
     return (
         <>
             <div className={S.main}>
+                <h1 className={S.h1}>Добро пожаловать в файлообменник,  вы можете передавать файлы по ссыле загружая в эту систему, перед тем как начать пользоваться, зарегистрируйтесь!!</h1>
                 <div className={S.left}>
                 </div>
                 <div className={S.right}>

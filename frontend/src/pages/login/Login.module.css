@@ -9,6 +9,9 @@
 }
 
 .left {
+    color: black;
+    font-style: italic;
+    font-size: 2em;
     background-color: #242424;
     opacity: 0.5;
     width: 100%;
@@ -51,4 +54,8 @@
 
 .error {
     background-color: red;
+}
+
+.h1 {
+    text-align: center;
 }

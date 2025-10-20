@@ -42,8 +42,8 @@ export const Space = () => {
             <div className={S.logout} onClick={Logout}>Выйти из системы</div>
             <div className={S.fileSpace}>{selector.map((i) => <File key={i.id} props={i}/>)}</div>
               <Details/>
+              <AddBtn/>
           </div>
-          <AddBtn/>
 
       </>
   )

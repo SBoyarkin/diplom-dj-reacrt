@@ -1,18 +1,234 @@
-.label {
-    display: none;
-    width: 12em;
-    height: 6em;
+.uploadContainer {
+    margin: 16px 0;
+
 }
+
+.uploadForm {
+    margin-bottom: 16px;
+}
+
 .btn {
-    position: absolute;
-    inset-inline-end: 40px;
-    inset-block-end: 100px;
-    user-select: none;
-    background-color: #ffa06c;
-    padding: 10px;
-    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #007bff;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
 }
 
 .btn:hover {
-    background-color: #1b6d85;
+    background: #0056b3;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.btnDisabled {
+    background: #6c757d;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.btnDisabled:hover {
+    background: #6c757d;
+    transform: none;
+    box-shadow: none;
+}
+
+.fileInput {
+    display: none;
+}
+
+.fileInfoPanel {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    padding: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.panelHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background: white;
+    border-bottom: 1px solid #e9ecef;
+    border-radius: 12px 12px 0 0;
+    font-weight: 600;
+    color: #212529;
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #6c757d;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.closeButton:hover {
+    background-color: #f8f9fa;
+    color: #dc3545;
+}
+
+.fileInfo {
+    padding: 20px;
+    background: white;
+    margin: 0;
+}
+
+.infoRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.infoRow:last-child {
+    border-bottom: none;
+}
+
+.label {
+    font-weight: 600;
+    color: #495057;
+    min-width: 80px;
+}
+
+.value {
+    color: #212529;
+    text-align: right;
+    word-break: break-all;
+    max-width: 60%;
+}
+
+.progressSection {
+    padding: 20px;
+    background: white;
+    border-top: 1px solid #e9ecef;
+}
+
+.progressBar {
+    width: 100%;
+    height: 8px;
+    background: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.progressFill {
+    height: 100%;
+    background: linear-gradient(90deg, #007bff, #0056b3);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.progressText {
+    text-align: center;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.commentSection {
+    padding: 20px;
+    background: white;
+    border-top: 1px solid #e9ecef;
+    border-radius: 0 0 12px 12px;
+}
+
+.commentLabel {
+    display: block;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 8px;
+}
+
+.commentInput {
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    resize: vertical;
+    min-height: 80px;
+    margin-bottom: 16px;
+    transition: border-color 0.2s;
+}
+
+.commentInput:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.commentActions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.uploadButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.uploadButton:hover:not(:disabled) {
+    background: #218838;
+}
+
+.uploadButton:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+}
+
+.cancelButton {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.cancelButton:hover:not(:disabled) {
+    background: #545b62;
+}
+
+.cancelButton:disabled {
+    background: #adb5bd;
+    cursor: not-allowed;
 }

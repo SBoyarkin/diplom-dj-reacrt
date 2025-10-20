@@ -9,7 +9,6 @@ export const Main = () => {
             <div className={S.main}>
                 <Menu/>
                 <Space/>
-                <AddBtn />
             </div>
         </>
     )
