@@ -46,7 +46,7 @@ class FileViewSet(viewsets.ModelViewSet):
             serializer = self.get_serializer(files, many=True)
             return Response(serializer.data)
         else:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class RegistrationViewSet(viewsets.ModelViewSet):

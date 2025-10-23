@@ -60,7 +60,7 @@ export const AddBtn = () => {
             });
 
             console.log('Файл успешно загружен:', response.data);
-            getFiles(dispatch, setListFile);
+            getFiles(FILES, dispatch, setListFile);
 
 
             handleCancelUpload();

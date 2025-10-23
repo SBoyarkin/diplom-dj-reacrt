@@ -4,6 +4,7 @@ import {apiClient, getFiles} from "../../customRequest.js";
 import {useSelector, useDispatch} from "react-redux";
 import {setUserList} from "../../features/userListSlice.js";
 import {setListFile} from "../../features/filesListSlice.js";
+import {STAFF_FILES_URL} from "../../endpoint.js";
 
 export const Staff = () => {
     const [selectedUser, setSelectedUser] = useState(null);
@@ -21,7 +22,16 @@ export const Staff = () => {
 
   const handleSelectUser = (user) => {
     setSelectedUser(user);
-    getFiles(dispatch, setListFile)
+    console.log(user)
+      apiClient.get(`${STAFF_FILES_URL}${user.id}`)
+          .then(request => {
+              if (request.status === 200) {
+                  dispatch(setListFile(request.data))
+              }
+              if (request.status === 204) {
+                  dispatch(setListFile([]))
+              }
+          }).catch(error => console.log(error))
   };
   return (
     <div className={S.adminContainer}>

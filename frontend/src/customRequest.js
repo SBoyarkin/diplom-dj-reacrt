@@ -22,8 +22,8 @@ apiClient.interceptors.request.use(
 
 
 
-export function getFiles(dispatch, slice) {
-  return apiClient.get(FILES)
+export function getFiles(url, dispatch, slice) {
+  return apiClient.get(url)
     .then(response => {
       if (dispatch && typeof dispatch === 'function') {
         dispatch(slice(response.data));

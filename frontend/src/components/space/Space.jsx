@@ -8,7 +8,7 @@ import {removeFile} from "../../features/fileSlice.js";
 import {setListFile} from "../../features/filesListSlice.js";
 import {NavLink, useNavigate} from "react-router";
 import {Details} from "../details/Details.jsx";
-import {LOGOUT} from "../../endpoint.js";
+import {FILES, LOGOUT} from "../../endpoint.js";
 import {LOGIN} from "../../navigateEndpoint.js";
 import {AddBtn} from "../addBtn/AddBtn.jsx";
 
@@ -28,7 +28,7 @@ export const Space = () => {
     }
 
     useEffect(() => {
-        getFiles(dispatch, setListFile)
+        getFiles(FILES, dispatch, setListFile)
 
         },[])
 

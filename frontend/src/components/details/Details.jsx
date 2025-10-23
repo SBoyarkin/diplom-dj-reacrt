@@ -4,6 +4,7 @@ import {apiClient, getFiles} from "../../customRequest.js";
 import {useEffect, useState} from "react";
 import {setListFile} from "../../features/filesListSlice.js";
 import {setFile} from "../../features/fileSlice.js";
+import {FILES} from "../../endpoint.js";
 
 
 export const Details = () => {
@@ -54,7 +55,7 @@ export const Details = () => {
         apiClient.delete(`/cloud/files/${selector}/`)
             .then(response => {
                 console.log('Файл успешно удален:', response)
-                getFiles(dispatch, setListFile);
+                getFiles(FILES, dispatch, setListFile);
                 dispatch(setFile(null));
                 fileInfoHandler({});
             })
