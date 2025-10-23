@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {removeToken} from "../../features/tokenSlice.js";
 import {removeFile} from "../../features/fileSlice.js";
 import {setListFile} from "../../features/filesListSlice.js";
-import { useNavigate} from "react-router";
+import {NavLink, useNavigate} from "react-router";
 import {Details} from "../details/Details.jsx";
 import {LOGOUT} from "../../endpoint.js";
 import {LOGIN} from "../../navigateEndpoint.js";
@@ -16,6 +16,7 @@ export const Space = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const selector = useSelector(state => state.fileList.value)
+    const isStaffSelector = useSelector(state => state.user.is_staff)
         const Logout = () => {
         apiClient.post(LOGOUT)
             .then(response => {
@@ -39,8 +40,13 @@ export const Space = () => {
   return(
       <>
           <div className={S.space} onClick={resetFileState}>
-            <div className={S.logout} onClick={Logout}>Выйти из системы</div>
-            <div className={S.fileSpace}>{selector.map((i) => <File key={i.id} props={i}/>)}</div>
+              <div className={S.flexMenu}>
+                  {isStaffSelector ? <NavLink to='/admin'
+                  > Войти в режим администратратора </NavLink>: null }
+                  <div className={S.logout} onClick={Logout}>Выйти из системы</div>
+
+                </div>
+              <div className={S.fileSpace}>{selector.map((i) => <File key={i.id} props={i}/>)}</div>
               <Details/>
               <AddBtn/>
           </div>

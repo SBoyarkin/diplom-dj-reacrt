@@ -25,3 +25,16 @@
     display: flex;
     flex-direction: row;
 }
+
+.flexMenu {
+    display: flex;
+}
+
+.isActive {
+    background-color: #1A01CC;
+
+}
+
+.isPending {
+    background-color: black;
+}

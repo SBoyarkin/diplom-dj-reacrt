@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'djoser',
     'cloud',
+    'extended',
 ]
 
 MIDDLEWARE = [
@@ -148,5 +149,12 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+DJOSER = {
+    'SERIALIZERS': {
+        'user': 'extended.serializers.CustomUserSerializer',
+        'current_user': 'extended.serializers.CustomUserSerializer',
+    }
+}
 
 AUTH_USER_MODEL = 'cloud.CustomUser'

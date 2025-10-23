@@ -17,13 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, re_path
 
-import cloud.views
 from cloud.urls import router
+from cloud.views import RegistrationViewSet
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^auth/', include('djoser.urls')),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
     path(r'cloud/', include(router.urls)),
-    path(r'auth/register/', cloud.views.RegistrationViewSet.as_view({'post': 'create'})),
+    path(r'auth/register/', RegistrationViewSet.as_view({'post': 'create'})),
 ]

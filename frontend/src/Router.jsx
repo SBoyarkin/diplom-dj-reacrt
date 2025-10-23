@@ -2,6 +2,7 @@ import {createBrowserRouter, redirect} from "react-router";
 import {Login} from "./pages/login/Login.jsx";
 import {Main} from "./pages/main/Main.jsx";
 import {SignIn} from "./pages/signIn/SignIn.jsx";
+import {Staff} from "./pages/staff/Staff.jsx";
 
 const checkAuth = () => {
   return !!localStorage.getItem('Token');
@@ -42,6 +43,15 @@ export const router = createBrowserRouter(
             children: [
             ],
         },
+
+        {
+            path: '/admin',
+            Component: Staff,
+            loader: authLoader,
+            children: [],
+        },
+
+
           {
             path: '*',
             loader: () => redirect(checkAuth() ? '/' : '/login'),
