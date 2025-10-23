@@ -68,7 +68,7 @@ export const Staff = () => {
 
         <div className={S.filesSection}>
           <h2 className={S.sectionTitle}>
-            {selectedUser ? `Файлы пользователя: ${selectedUser.name}` : 'Выберите пользователя'}
+            {selectedUser ? `Файлы пользователя: ${selectedUser.username}` : 'Выберите пользователя'}
           </h2>
 
           {selectedUser ? (
