@@ -39,6 +39,15 @@ class FileViewSet(viewsets.ModelViewSet):
         file_obj.update_download_date()
         return response
 
+    @action(detail=False, methods=['get'], url_path='filter/(?P<owner>[^/.]+)', permission_classes=[IsAdmin])
+    def selected_by_owner(self, request, owner=None):
+        files = File.objects.filter(owner=owner)
+        if files.count() > 0:
+            serializer = self.get_serializer(files, many=True)
+            return Response(serializer.data)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
 
 class RegistrationViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
