@@ -80,11 +80,8 @@ export const Staff = () => {
                     <div className={S.fileInfo}>
                       <h4 className={S.fileName}>{file.name}</h4>
                       <p className={S.fileDetails}>
-                        Размер: {file.size} • Загружен: {file.uploadDate}
+                        Размер: {file.size} • Загружен: {file.date_uploaded}
                       </p>
-                    </div>
-                    <div className={S.fileActions}>
-                      <button className={S.downloadButton}>Скачать</button>
                     </div>
                   </div>
                 ))
