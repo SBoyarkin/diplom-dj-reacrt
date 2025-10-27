@@ -1,14 +1,13 @@
-from rest_framework.generics import RetrieveAPIView
+from django.core.exceptions import PermissionDenied
+from rest_framework.generics import DestroyAPIView
 from rest_framework.response import Response
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
-
+from rest_framework.exceptions import ValidationError
+from rest_framework.permissions import IsAuthenticated
 from django.http import HttpResponse
-
-
 from .serializers import FileViewSetSerializer, RegistrationSerializer
 from .models import File, CustomUser
-from rest_framework.permissions import IsAuthenticated
 from .permissions import IsOwnerOrAdmin, IsAdmin
 
 
@@ -61,3 +60,26 @@ class RegistrationViewSet(viewsets.ModelViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class CustomUserDestroyView(DestroyAPIView):
+    queryset = CustomUser.objects.all()
+    permission_classes = [IsAdmin]
+
+    def perform_destroy(self, instance):
+        if instance == self.request.user:
+            raise PermissionDenied("Вы не можете удалить свой собственный аккаунт")
+        instance.delete()
+
+    def destroy(self, request, *args, **kwargs):
+        try:
+            instance = self.get_object()
+            self.perform_destroy(instance)
+            return Response(
+                {"detail": "Пользователь успешно удален"},
+                status=status.HTTP_204_NO_CONTENT
+            )
+        except ValidationError as e:
+            return Response(
+                {"error": str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )

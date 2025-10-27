@@ -158,3 +158,6 @@ DJOSER = {
 }
 
 AUTH_USER_MODEL = 'cloud.CustomUser'
+
+
+# settings.py

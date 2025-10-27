@@ -12,8 +12,11 @@ export const Staff = () => {
     const users = useSelector(state => state.userList.value)
     const userFiles = useSelector(state => state.fileList.value)
 
-    const deleteUser = (e) => {
-        console.log(e)
+    const deleteUser = (e, user) => {
+        e.stopPropagation()
+        apiClient.delete(`users-destroy/${user.id}/`)
+            .then(response => {
+            }).catch(error => console.log(error.message))
     }
     useEffect(() => {
         apiClient.get('/auth/users/')
@@ -43,7 +46,7 @@ export const Staff = () => {
           <div className={S.usersList}>
             {users.map(user => (
               <div
-                key={user.id}
+                key={user.id} id={user.id}
                 className={`${S.userCard} ${selectedUser?.id === user.id ? S.selected : ''}`}
                 onClick={() => handleSelectUser(user)}
               >
@@ -56,7 +59,7 @@ export const Staff = () => {
                 </div>
                 <button
                   className={S.deleteButton}
-                  onClick={deleteUser}
+                  onClick={(e) => deleteUser(e, user)}
                   title="Удалить пользователя"
                 >
                   ×

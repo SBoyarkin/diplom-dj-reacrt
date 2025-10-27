@@ -2,9 +2,7 @@ import re
 
 from rest_framework import serializers
 
-from django.contrib.auth.models import User
 from .models import File, CustomUser
-
 
 class FileViewSetSerializer(serializers.ModelSerializer):
     download_url = serializers.SerializerMethodField()
