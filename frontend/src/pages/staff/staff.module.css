@@ -1,5 +1,4 @@
 .adminContainer {
-  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
   font-family: Arial, sans-serif;
@@ -13,7 +12,7 @@
 }
 
 .content {
-  display: grid;
+  display: flex;
   grid-template-columns: 1fr 1fr;
   gap: 30px;
   height: calc(100vh - 150px);
@@ -27,10 +26,10 @@
   padding-bottom: 10px;
 }
 
-/* Стили для списка пользователей */
 .usersSection {
   border-right: 1px solid #e0e0e0;
   padding-right: 20px;
+  min-width: 300px;
 }
 
 .usersList {
@@ -112,7 +111,6 @@
   background: #c82333;
 }
 
-/* Стили для секции файлов */
 .filesSection {
   padding-left: 20px;
 }
@@ -179,7 +177,7 @@
   background: #218838;
 }
 
-/* Состояния без данных */
+
 .noSelection,
 .noFiles {
   text-align: center;
@@ -197,7 +195,7 @@
   color: #666;
 }
 
-/* Адаптивность */
+
 @media (max-width: 768px) {
   .content {
     grid-template-columns: 1fr;

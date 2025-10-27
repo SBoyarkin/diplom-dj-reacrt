@@ -16,9 +16,13 @@ export const Staff = () => {
         e.stopPropagation()
         apiClient.delete(`users-destroy/${user.id}/`)
             .then(response => {
+                if (response.status === 204) {
+                    apiClient.get('/auth/users/')
+                        .then(request => dispatch(setUserList(request.data)))
+                }
             }).catch(error => console.log(error.message))
     }
-    useEffect(() => {
+   useEffect(() => {
         apiClient.get('/auth/users/')
             .then(request => dispatch(setUserList(request.data)))
     }, []);

@@ -99,7 +99,7 @@ export const Details = () => {
             .then(response => {
                 console.log('Имя файла обновлено:', response)
                 if (response.statusText === 'OK') {
-                            getFiles(dispatch, setListFile);
+                            getFiles(FILES, dispatch, setListFile)
                     apiClient.get(`/cloud/files/${selector}`).then(
                         response => {
                             fileInfoHandler(response.data)
