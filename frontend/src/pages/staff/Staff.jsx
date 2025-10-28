@@ -5,12 +5,28 @@ import {useSelector, useDispatch} from "react-redux";
 import {setUserList} from "../../features/userListSlice.js";
 import {setListFile} from "../../features/filesListSlice.js";
 import {STAFF_FILES_URL} from "../../endpoint.js";
+import {formatDate, formatFileSize} from "../../scripts.js";
 
 export const Staff = () => {
     const [selectedUser, setSelectedUser] = useState(null);
     const dispatch = useDispatch()
     const users = useSelector(state => state.userList.value)
     const userFiles = useSelector(state => state.fileList.value)
+    const countFiles = (files) => {
+      return files ? files.length : 0;
+    };
+
+    const countTotalFileSize = (files) => {
+      if (!files || files.length === 0) return 0;
+
+      return files.reduce((total, file) => {
+        return total + (file.size || 0);
+      }, 0);
+    };
+
+    const countFile = countFiles(userFiles);
+    const countSizeFile = countTotalFileSize(userFiles);
+
 
     const deleteUser = (e, user) => {
         e.stopPropagation()
@@ -25,7 +41,10 @@ export const Staff = () => {
    useEffect(() => {
         apiClient.get('/auth/users/')
             .then(request => dispatch(setUserList(request.data)))
-    }, []);
+    }, [],);
+
+
+
 
   const handleSelectUser = (user) => {
     setSelectedUser(user);
@@ -75,7 +94,7 @@ export const Staff = () => {
 
         <div className={S.filesSection}>
           <h2 className={S.sectionTitle}>
-            {selectedUser ? `Файлы пользователя: ${selectedUser.username}` : 'Выберите пользователя'}
+            {selectedUser ? `Файлы пользователя: ${selectedUser.username}, количество ${countFile}, объем ${formatFileSize(countSizeFile)}` : 'Выберите пользователя'}
           </h2>
 
           {selectedUser ? (
@@ -87,7 +106,7 @@ export const Staff = () => {
                     <div className={S.fileInfo}>
                       <h4 className={S.fileName}>{file.name}</h4>
                       <p className={S.fileDetails}>
-                        Размер: {file.size} • Загружен: {file.date_uploaded}
+                        Размер: {formatFileSize(file.size)} • Загружен: {formatDate(file.date_uploaded)}
                       </p>
                     </div>
                   </div>

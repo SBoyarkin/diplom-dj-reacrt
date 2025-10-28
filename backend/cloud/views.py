@@ -21,10 +21,7 @@ class FileViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
-            if self.request.user.is_superuser:
-                return File.objects.all()
-            else:
-                return File.objects.filter(owner=self.request.user)
+            return File.objects.filter(owner=self.request.user)
 
     @action(detail=True, methods=['get'])
     def download(self, request, pk=None):
