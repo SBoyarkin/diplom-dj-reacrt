@@ -1,3 +1,4 @@
+import uuid
 from datetime import datetime
 
 from django.contrib.auth.models import AbstractUser
@@ -28,6 +29,9 @@ class File(models.Model):
     file = models.FileField(upload_to=user_directory_path)
     comment = models.TextField(blank=True)
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    public_token = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
+    is_public = models.BooleanField(default=False)
+    public_url_expires = models.DateTimeField(blank=True, null=True)
 
     def save(self, *args, **kwargs):
         if self.file:
@@ -41,4 +45,16 @@ class File(models.Model):
         self.date_downloaded = datetime.now()
         self.save()
 
-# Create your models here.
+    def generate_public_url(self, request, expires_days=None):
+        self.is_public = True
+        if expires_days:
+            from django.utils import timezone
+            self.public_url_expires = timezone.now() + timezone.timedelta(days=expires_days)
+        self.save()
+        return request.build_absolute_uri(f'/cloud/files/public/{self.public_token}/')
+
+    def revoke_public_url(self):
+        self.is_public = False
+        self.public_token = uuid.uuid4()
+        self.public_url_expires = None
+        self.save()

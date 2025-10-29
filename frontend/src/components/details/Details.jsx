@@ -50,6 +50,23 @@ export const Details = () => {
             })
     }
 
+    const shareFile = (e) => {
+        e.preventDefault()
+        apiClient.post(`/cloud/files/${selector}/generate_public_link/`,)
+        .then(response => {
+            console.log(response), getUserFile()
+        })
+
+    }
+
+        const removeShareFile = (e) => {
+        e.preventDefault()
+        apiClient.post(`/cloud/files/${selector}/revoke_public_link/`,)
+        .then(response => {
+            console.log(response), getUserFile()
+        })
+    }
+
     const updateComment = (e) => {
         e.preventDefault()
         const formData = new FormData(e.target)
@@ -116,11 +133,15 @@ export const Details = () => {
         setIsEditingName(false)
     }
 
-    useEffect(() => {
-        if (selector !== null) {
+    const getUserFile = () => {
             apiClient.get(`/cloud/files/${selector}`).then(
                 response => {fileInfoHandler(response.data)}
             )
+    }
+
+    useEffect(() => {
+        if (selector !== null) {
+            getUserFile()
         } else {
             fileInfoHandler({});
             setIsEditing(false);
@@ -198,11 +219,12 @@ export const Details = () => {
                             <span className={S.value}>{formatDate(fileInfo.date_downloaded)}</span>
                         </div>
                     )}
-
+                    {fileInfo.is_public === true ?
                     <div className={S.infoRow}>
-                        <span className={S.label}>ID:</span>
-                        <span className={S.value}>{fileInfo.id}</span>
-                    </div>
+                        <span className={S.label}>Публичная ссылка на файл:</span>
+                        <span className={S.value}>
+                            {fileInfo.public_access_url}</span>
+                    </div> : null}
                 </div>
 
                 <div className={S.commentSection}>
@@ -260,6 +282,24 @@ export const Details = () => {
                     >
                         🗑️ Удалить файл
                     </button>
+
+                    {!fileInfo.is_public ?
+
+                    <button
+                        onClick={shareFile}
+                        className={S.shareButton}
+                    >
+                        Поделиться
+                    </button>
+    :
+                    <button
+                        onClick={removeShareFile}
+                        className={S.shareButton}
+                    >
+                        Удалить ссылку
+                    </button>
+}
+
                 </div>
             </div>
         )

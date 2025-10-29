@@ -6,15 +6,28 @@ from .models import File, CustomUser
 
 class FileViewSetSerializer(serializers.ModelSerializer):
     download_url = serializers.SerializerMethodField()
+    public_access_url = serializers.SerializerMethodField()
+    is_public = serializers.BooleanField(read_only=True)
+    public_url_expires = serializers.DateTimeField(read_only=True)
+
     class Meta:
         model = File
-        fields = ['id', 'name','size','date_uploaded','date_downloaded','pub_url', 'file', 'comment','owner', 'download_url']
+        fields = [
+            'id', 'name', 'size', 'date_uploaded', 'date_downloaded',
+            'pub_url', 'file', 'comment', 'owner', 'download_url',
+            'public_access_url', 'is_public', 'public_url_expires'
+        ]
         read_only_fields = ('id', 'pub_url', 'size', 'date_downloaded', 'owner')
-
 
     def get_download_url(self, obj):
         request = self.context.get('request')
         return request.build_absolute_uri(f'/cloud/files/{obj.id}/download/')
+
+    def get_public_access_url(self, obj):
+        if obj.is_public:
+            request = self.context.get('request')
+            return request.build_absolute_uri(f'/cloud/files/public/{obj.public_token}/')
+        return None
 
 
 

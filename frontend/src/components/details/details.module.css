@@ -211,6 +211,22 @@
     transition: background-color 0.2s;
 }
 
+
+.shareButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #354bdc;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+
 .deleteButton:hover {
     background: #c82333;
 }

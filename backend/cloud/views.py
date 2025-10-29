@@ -1,3 +1,5 @@
+from datetime import timezone
+
 from django.core.exceptions import PermissionDenied
 from rest_framework.generics import DestroyAPIView
 from rest_framework.response import Response
@@ -30,7 +32,6 @@ class FileViewSet(viewsets.ModelViewSet):
         response = HttpResponse(file_handle, content_type='application/octet-stream')
         filename = file_obj.name
         response['Content-Disposition'] = f'attachment; filename="{filename}"'
-        print(filename)
         response['Content-Length'] = file_obj.file.size
         file_obj.update_download_date()
         return response
@@ -43,6 +44,45 @@ class FileViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
         else:
             return Response(status=status.HTTP_204_NO_CONTENT)
+
+    @action(detail=True, methods=['post'])
+    def generate_public_link(self, request, pk=None):
+        file_obj = self.get_object()
+        expires_days = request.data.get('expires_days', None)
+
+        public_url = file_obj.generate_public_url(request, expires_days)
+        return Response({
+            'public_url': public_url,
+            'expires_at': file_obj.public_url_expires,
+            'message': 'Публичная ссылка создана успешно'
+        })
+
+    @action(detail=True, methods=['post'])
+    def revoke_public_link(self, request, pk=None):
+        file_obj = self.get_object()
+        file_obj.revoke_public_url()
+        return Response({'message': 'Публичная ссылка отозвана'})
+
+    @action(detail=False, methods=['get'], url_path='public/(?P<public_token>[^/.]+)', permission_classes=[])
+    def public_download(self, request, public_token=None):
+        try:
+            file_obj = File.objects.get(public_token=public_token, is_public=True)
+
+            if file_obj.public_url_expires and file_obj.public_url_expires < timezone.now():
+                return Response({'error': 'Ссылка устарела'}, status=status.HTTP_410_GONE)
+
+            file_handle = file_obj.file.open('rb')
+            response = HttpResponse(file_handle, content_type='application/octet-stream')
+            filename = file_obj.name
+            response['Content-Disposition'] = f'attachment; filename="{filename}"'
+            response['Content-Length'] = file_obj.file.size
+            file_obj.update_download_date()
+
+            return response
+
+        except File.DoesNotExist:
+            return Response({'error': 'Файл не найден или ссылка недействительна'},
+                            status=status.HTTP_404_NOT_FOUND)
 
 
 class RegistrationViewSet(viewsets.ModelViewSet):
