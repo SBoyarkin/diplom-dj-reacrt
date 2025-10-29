@@ -1,5 +1,19 @@
 # Cloud File Storage API
 
+### Настройки приложения
+Основные настройки приложения находятся в файле config.ini
+
+Секция для настройки подключения к базе данных
+### [database]
+- NAME=NAMEDATABASE
+- USER=USERNAME
+- PASSWORD=PASSWORD
+- HOST=HOSTNAME
+- PORT=5432
+
+Настройка пути для сохранения файлов
+### [path]
+- save_url = upload
 
 Django REST Framework приложение для облачного хранения файлов с системой аутентификации и авторизации.
 
