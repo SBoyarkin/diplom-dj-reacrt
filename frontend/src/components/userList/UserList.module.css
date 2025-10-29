@@ -1,0 +1,21 @@
+.usersSection {
+  border-right: 1px solid #e0e0e0;
+  padding-right: 20px;
+  min-width: 300px;
+}
+
+.sectionTitle {
+  color: #444;
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 10px;
+}
+
+.usersList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-height: 600px;
+  overflow-y: auto;
+}

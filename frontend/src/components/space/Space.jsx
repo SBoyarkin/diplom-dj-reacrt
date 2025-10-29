@@ -16,7 +16,7 @@ export const Space = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const selector = useSelector(state => state.fileList.value)
-    const isStaffSelector = useSelector(state => state.user.is_staff)
+
         const Logout = () => {
         apiClient.post(LOGOUT)
             .then(response => {
@@ -41,8 +41,7 @@ export const Space = () => {
       <>
           <div className={S.space} onClick={resetFileState}>
               <div className={S.flexMenu}>
-                  {isStaffSelector ? <NavLink to='/admin'
-                  > Войти в режим администратратора </NavLink>: null }
+
                   <div className={S.logout} onClick={Logout}>Выйти из системы</div>
 
                 </div>
