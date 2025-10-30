@@ -22,8 +22,8 @@ from cloud.views import RegistrationViewSet, CustomUserDestroyView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    re_path(r'^auth/', include('djoser.urls')),
-    re_path(r'^auth/', include('djoser.urls.authtoken')),
+    path(r'auth/', include('djoser.urls')),
+    path(r'auth/', include('djoser.urls.authtoken')),
     path(r'cloud/', include(router.urls)),
     path(r'auth/register/', RegistrationViewSet.as_view({'post': 'create'})),
     path('users-destroy/<int:pk>/', CustomUserDestroyView.as_view(), name='user-destroy'),
