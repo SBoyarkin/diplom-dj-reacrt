@@ -14,8 +14,6 @@ export const SignIn = () => {
         const formObject = Object.fromEntries(formData.entries())
 
         console.log('Form data:', formObject)
-
-        // Очищаем предыдущие сообщения
         setSuccessMessage('')
         setErrorMessage('')
         setFieldErrors({})

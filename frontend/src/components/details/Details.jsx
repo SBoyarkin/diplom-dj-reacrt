@@ -7,15 +7,14 @@ import {setFile} from "../../features/fileSlice.js";
 import {FILES} from "../../endpoint.js";
 import {formatDate, formatFileSize} from "../../scripts.js";
 
-
 export const Details = () => {
     const [fileInfo, fileInfoHandler] = useState({})
     const [isEditing, setIsEditing] = useState(false)
     const [isEditingName, setIsEditingName] = useState(false)
+    const [isSharing, setIsSharing] = useState(false)
+    const [expiresDays, setExpiresDays] = useState(7) // Значение по умолчанию
     const selector = useSelector((state) => state.file.value)
     const dispatch = useDispatch()
-
-
 
     const save = () => {
         apiClient.get(fileInfo.download_url, {
@@ -52,19 +51,34 @@ export const Details = () => {
 
     const shareFile = (e) => {
         e.preventDefault()
-        apiClient.post(`/cloud/files/${selector}/generate_public_link/`,)
-        .then(response => {
-            console.log(response), getUserFile()
-        })
+        const data = expiresDays ? { expires_days: expiresDays } : {}
 
+        apiClient.post(`/cloud/files/${selector}/generate_public_link/`, data)
+        .then(response => {
+            console.log(response)
+            setIsSharing(false)
+            getUserFile()
+        })
+        .catch(error => {
+            console.error('Ошибка при создании публичной ссылки:', error)
+        })
     }
 
-        const removeShareFile = (e) => {
+    const removeShareFile = (e) => {
         e.preventDefault()
         apiClient.post(`/cloud/files/${selector}/revoke_public_link/`,)
         .then(response => {
             console.log(response), getUserFile()
         })
+    }
+
+    const startSharing = () => {
+        setIsSharing(true)
+    }
+
+    const cancelSharing = () => {
+        setIsSharing(false)
+        setExpiresDays(7)
     }
 
     const updateComment = (e) => {
@@ -146,6 +160,7 @@ export const Details = () => {
             fileInfoHandler({});
             setIsEditing(false);
             setIsEditingName(false);
+            setIsSharing(false);
         }
     }, [selector])
 
@@ -219,12 +234,25 @@ export const Details = () => {
                             <span className={S.value}>{formatDate(fileInfo.date_downloaded)}</span>
                         </div>
                     )}
-                    {fileInfo.is_public === true ?
-                    <div className={S.infoRow}>
-                        <span className={S.label}>Публичная ссылка на файл:</span>
-                        <span className={S.value}>
-                            {fileInfo.public_access_url}</span>
-                    </div> : null}
+
+                    {fileInfo.is_public === true && (
+                        <>
+                            <div className={S.infoRow}>
+                                <span className={S.label}>Публичная ссылка:</span>
+                                <span className={S.value}>
+                                    {fileInfo.public_access_url}
+                                </span>
+                            </div>
+                            {fileInfo.public_url_expires && (
+                                <div className={S.infoRow}>
+                                    <span className={S.label}>Ссылка действительна до:</span>
+                                    <span className={S.value}>
+                                        {formatDate(fileInfo.public_url_expires)}
+                                    </span>
+                                </div>
+                            )}
+                        </>
+                    )}
                 </div>
 
                 <div className={S.commentSection}>
@@ -283,23 +311,51 @@ export const Details = () => {
                         🗑️ Удалить файл
                     </button>
 
-                    {!fileInfo.is_public ?
-
-                    <button
-                        onClick={shareFile}
-                        className={S.shareButton}
-                    >
-                        Поделиться
-                    </button>
-    :
-                    <button
-                        onClick={removeShareFile}
-                        className={S.shareButton}
-                    >
-                        Удалить ссылку
-                    </button>
-}
-
+                    {!fileInfo.is_public ? (
+                        isSharing ? (
+                            <div className={S.shareForm}>
+                                <label className={S.shareLabel}>
+                                    Срок действия ссылки (дни):
+                                    <input
+                                        type="number"
+                                        min="1"
+                                        max="365"
+                                        value={expiresDays}
+                                        onChange={(e) => setExpiresDays(parseInt(e.target.value) || 1)}
+                                        className={S.expiresInput}
+                                    />
+                                </label>
+                                <div className={S.shareActions}>
+                                    <button
+                                        onClick={shareFile}
+                                        className={S.confirmShareButton}
+                                    >
+                                        Создать ссылку
+                                    </button>
+                                    <button
+                                        onClick={cancelSharing}
+                                        className={S.cancelShareButton}
+                                    >
+                                        Отмена
+                                    </button>
+                                </div>
+                            </div>
+                        ) : (
+                            <button
+                                onClick={startSharing}
+                                className={S.shareButton}
+                            >
+                                Поделиться
+                            </button>
+                        )
+                    ) : (
+                        <button
+                            onClick={removeShareFile}
+                            className={S.removeShareButton}
+                        >
+                            Удалить ссылку
+                        </button>
+                    )}
                 </div>
             </div>
         )
