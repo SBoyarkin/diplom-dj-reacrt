@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 
 from cloud.urls import router
-from cloud.views import RegistrationViewSet, CustomUserDestroyView
+from cloud.views import RegistrationViewSet, CustomUserDestroyView, ChangeStatusViewSet
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,4 +27,5 @@ urlpatterns = [
     path(r'cloud/', include(router.urls)),
     path(r'auth/register/', RegistrationViewSet.as_view({'post': 'create'})),
     path('users-destroy/<int:pk>/', CustomUserDestroyView.as_view(), name='user-destroy'),
+    path('change-status/<int:pk>/', ChangeStatusViewSet.as_view(), name='change-status'),
 ]

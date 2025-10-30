@@ -56,3 +56,8 @@ class RegistrationSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data.pop('password2')
         return CustomUser.objects.create_user(**validated_data)
+
+class ChangeStatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['is_staff']

@@ -1,14 +1,14 @@
 from datetime import timezone
 
 from django.core.exceptions import PermissionDenied
-from rest_framework.generics import DestroyAPIView
+from rest_framework.generics import DestroyAPIView, UpdateAPIView
 from rest_framework.response import Response
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
 from django.http import HttpResponse
-from .serializers import FileViewSetSerializer, RegistrationSerializer
+from .serializers import FileViewSetSerializer, RegistrationSerializer, ChangeStatusSerializer
 from .models import File, CustomUser
 from .permissions import IsOwnerOrAdmin, IsAdmin
 
@@ -120,3 +120,38 @@ class CustomUserDestroyView(DestroyAPIView):
                 {"error": str(e)},
                 status=status.HTTP_400_BAD_REQUEST
             )
+
+
+from rest_framework.generics import UpdateAPIView
+from rest_framework.response import Response
+from rest_framework import status
+from django.contrib.auth import get_user_model
+
+CustomUser = get_user_model()
+
+
+class ChangeStatusViewSet(UpdateAPIView):
+    queryset = CustomUser.objects.all()
+    permission_classes = [IsAdmin]
+    serializer_class = ChangeStatusSerializer
+
+    def update(self, request, *args, **kwargs):
+        user = self.get_object()
+
+        is_staff = request.data.get('is_staff')
+
+        if is_staff is None:
+            return Response(
+                {'error': 'Поле is_staff обязательно'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        user.is_staff = is_staff
+        user.save()
+
+        return Response({
+            'message': f'Статус is_staff пользователя {user.username} изменен на {is_staff}',
+            'user_id': user.id,
+            'username': user.username,
+            'is_staff': user.is_staff
+        })
+
