@@ -69,3 +69,20 @@
 .deleteButton:hover {
   background: #c82333;
 }
+
+.statusButton {
+  padding: 4px 8px;
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  background: white;
+  color: #007bff;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 5px;
+}
+
+.statusButton:hover {
+  background: #007bff;
+  color: white;
+}
