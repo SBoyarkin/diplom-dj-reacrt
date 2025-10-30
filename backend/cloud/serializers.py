@@ -41,16 +41,16 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
     def validate_login(self, value):
         if len(value) < 4 or len(value) > 20:
-            raise serializers.ValidationError('Username must be between 4 and 20 characters long.')
+            raise serializers.ValidationError('Имя пользователя должно содеражть от 4 до 20 символовю')
         if not value[0].isalpha():
-            raise serializers.ValidationError('First character must be a letter.')
+            raise serializers.ValidationError('Первый символ должен быть буква')
         if not re.match(r'^[a-zA-Z][a-zA-Z0-9]*$', value):
-            raise serializers.ValidationError('Username can only contain Latin letters and numbers.')
+            raise serializers.ValidationError('Имя пользователя может содержать только имя буквы и цифры.')
         return value
 
     def validate(self, data):
         if data['password'] != data['password2']:
-            raise serializers.ValidationError({"password2": "Passwords don't match."})
+            raise serializers.ValidationError({"password2": "Пароли не совпадают."})
         return data
 
     def create(self, validated_data):
