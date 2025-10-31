@@ -1,5 +1,4 @@
-from datetime import timezone
-
+from django.utils import timezone
 from django.core.exceptions import PermissionDenied
 from rest_framework.generics import DestroyAPIView, UpdateAPIView
 from rest_framework.response import Response
