@@ -6,7 +6,6 @@ import {UserCard} from "../userCard/UserCard.jsx";
 export const UserList = ({ users, selectedUser, onUserSelect, onUserDelete }) => {
     return (
         <div className={S.usersSection}>
-            <h2 className={S.sectionTitle}>Список пользователей</h2>
             <div className={S.usersList}>
                 {users.map(user => (
                     <UserCard

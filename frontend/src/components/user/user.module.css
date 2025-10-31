@@ -1,10 +1,179 @@
-.user_btn {
+.userCard {
     display: flex;
-    justify-content: center;
-    border-radius: 5px;
-    user-select: none;
+    align-items: center;
+    gap: 15px;
+    padding: 16px;
+    background: #ffffff;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-.user_btn:hover {
-    background-color: #7F8177;
+.userCard:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+    border-color: #cbd5e0;
+}
+
+.userLoading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    color: #4a5568;
+    font-size: 0.9em;
+}
+
+.loadingSpinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #e2e8f0;
+    border-left: 2px solid #4299e1;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.userAvatar {
+    background-color: #0bc5ea;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.2em;
+    color: white;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.userInfo {
+    flex: 1;
+    min-width: 0;
+}
+
+.userName {
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 1em;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.userDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.userEmail {
+    color: #4a5568;
+    font-size: 0.8em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.userBadge {
+    background: linear-gradient(135deg, #4299e1, #667eea);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.7em;
+    font-weight: 600;
+    align-self: flex-start;
+    letter-spacing: 0.3px;
+}
+
+/* Анимации */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.userCard {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .userCard {
+        padding: 12px;
+        gap: 12px;
+    }
+
+    .userAvatar {
+        width: 45px;
+        height: 45px;
+        font-size: 1.1em;
+    }
+
+    .userName {
+        font-size: 0.95em;
+    }
+
+    .userEmail {
+        font-size: 0.75em;
+    }
+}
+
+@media (max-width: 480px) {
+    .userCard {
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .userAvatar {
+        width: 40px;
+        height: 40px;
+        font-size: 1em;
+    }
+
+    .userName {
+        font-size: 0.9em;
+    }
+
+    .userDetails {
+        gap: 1px;
+    }
+
+    .userBadge {
+        font-size: 0.65em;
+        padding: 1px 6px;
+    }
+}
+
+/* Состояния для различных сценариев */
+.userCard:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Альтернативный стиль для гостевого режима */
+.userCard.guest {
+    opacity: 0.7;
+    background: #f7fafc;
+}
+
+.userCard.guest .userAvatar {
+    background-color: #a0aec0;
+}
+
+.userCard.guest .userName {
+    color: #718096;
 }

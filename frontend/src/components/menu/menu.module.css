@@ -1,11 +1,248 @@
 .menu {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    background-color: rgba(0, 0, 0, 0.07);
-    min-width: 300px;
-    padding: 20px;
-    border-end-start-radius: 10px;
-    border-top-left-radius: 10px;
-    border-right: solid 1px #989898;
+    background: #ffffff;
+    min-width: 420px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e1e5e9;
+    overflow: hidden;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.menuHeader {
+    padding: 25px 25px 20px 25px;
+    border-bottom: 1px solid #e2e8f0;
+    background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);
+}
+
+.menuTitle {
+    color: #2d3748;
+    font-size: 1.3em;
+    font-weight: 600;
+    margin: 0 0 5px 0;
+    background: linear-gradient(135deg, #4299e1, #667eea);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.menuSubtitle {
+    color: #4a5568;
+    font-size: 0.85em;
+    margin: 0;
+    opacity: 0.8;
+}
+
+.menuContent {
+    flex: 1;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.uploadSection {
+    flex-shrink: 0;
+}
+
+.adminSection {
+    margin-top: auto;
+}
+
+.adminLink {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: #f7fafc;
+    color: #4a5568;
+    text-decoration: none;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+    position: relative;
+    font-weight: 500;
+}
+
+.adminLink:hover {
+    background: #4299e1;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(66, 153, 225, 0.3);
+    border-color: #4299e1;
+}
+
+.adminLinkActive {
+    background: #4299e1;
+    color: white;
+    border-color: #4299e1;
+}
+
+.adminLinkActive::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 70%;
+    background: #ffffff;
+    border-radius: 0 2px 2px 0;
+}
+
+.adminIcon {
+    font-size: 1.2em;
+    flex-shrink: 0;
+}
+
+.adminText {
+    flex: 1;
+    font-size: 0.9em;
+}
+
+.adminBadge {
+    background: rgba(255, 255, 255, 0.2);
+    color: inherit;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.7em;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.adminLink:hover .adminBadge {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.menuFooter {
+    padding: 20px 25px;
+    border-top: 1px solid #e2e8f0;
+    background: #f8fafc;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.menu {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.adminLink {
+    animation: fadeIn 0.6s ease-out;
+}
+
+@media (max-width: 1024px) {
+    .menu {
+        min-width: 280px;
+    }
+
+    .menuHeader,
+    .menuContent,
+    .menuFooter {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .menu {
+        min-width: auto;
+        width: 100%;
+        height: auto;
+        border-radius: 12px 12px 0 0;
+        margin-bottom: 20px;
+    }
+
+    .menuContent {
+        flex-direction: row;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .uploadSection {
+        flex: 1;
+    }
+
+    .adminSection {
+        margin-top: 0;
+        flex-shrink: 0;
+    }
+
+    .adminLink {
+        min-width: 200px;
+    }
+}
+
+@media (max-width: 640px) {
+    .menuContent {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .adminLink {
+        min-width: auto;
+        width: 100%;
+    }
+
+    .menuHeader {
+        padding: 20px 20px 15px 20px;
+    }
+
+    .menuFooter {
+        padding: 15px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .menu {
+        border-radius: 0;
+        margin-bottom: 15px;
+        border-left: none;
+        border-right: none;
+    }
+
+    .menuHeader,
+    .menuContent,
+    .menuFooter {
+        padding: 15px;
+    }
+
+    .menuTitle {
+        font-size: 1.2em;
+    }
+
+    .adminLink {
+        padding: 12px 14px;
+    }
+
+    .adminText {
+        font-size: 0.85em;
+    }
+}
+
+.menuContent::-webkit-scrollbar {
+    width: 4px;
+}
+
+.menuContent::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 2px;
+}
+
+.menuContent::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 2px;
+}
+
+.menuContent::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
 }

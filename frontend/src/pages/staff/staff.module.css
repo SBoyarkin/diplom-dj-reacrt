@@ -1,39 +1,242 @@
 .adminContainer {
-  margin: 0 auto;
-  padding: 20px;
-  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  min-width: 100vw;
+  box-sizing: border-box;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.header {
+  box-sizing: border-box;
+  text-align: center;
+  padding-bottom: 10px;
+  padding-top: 20px;
+
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #4299e1;
+  text-decoration: none;
+  font-weight: 500;
+  margin-bottom: 15px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.backLink:hover {
+  color: #3182ce;
+  background: rgba(255, 255, 255, 1);
+  text-decoration: none;
+  transform: translateX(-5px);
 }
 
 .title {
-  text-align: center;
-  color: #333;
-  margin-bottom: 30px;
-  font-size: 2rem;
+  color: #2d3748;
+  font-size: 2.5em;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+  background: linear-gradient(135deg, #4299e1, #667eea);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  color: #4a5568;
+  font-size: 1.1em;
+  margin: 0;
+  opacity: 0.8;
 }
 
 .content {
   display: flex;
-  grid-template-columns: 1fr 1fr;
   gap: 30px;
-  height: calc(100vh - 150px);
+  max-width: 90vw;
+  margin: 0 auto;
+  height: calc(100vh - 200px);
 }
 
+.sidePanel {
+  flex: 0 0 400px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e1e5e9;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
 
+.mainPanel {
+  flex: 1;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e1e5e9;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
 
+.panelHeader {
+  padding: 20px 25px;
+  border-bottom: 1px solid #e2e8f0;
+  background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
+.panelTitle {
+  color: #2d3748;
+  font-size: 1.3em;
+  font-weight: 600;
+  margin: 0;
+}
 
-
-
-
-
+.usersCount,
+.filesCount {
+  background: #4299e1;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8em;
+  font-weight: 600;
+}
 
 .loading {
-  text-align: center;
-  padding: 50px;
-  font-size: 1.2rem;
-  color: #666;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  color: #4a5568;
+  font-size: 1.1em;
 }
 
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e2e8f0;
+  border-left: 4px solid #4299e1;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 15px;
+}
 
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
+.adminContainer {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.sidePanel,
+.mainPanel {
+  animation: fadeIn 0.8s ease-out;
+}
+
+@media (max-width: 1024px) {
+  .content {
+    gap: 20px;
+    height: auto;
+    min-height: 600px;
+  }
+
+  .sidePanel {
+    flex: 0 0 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .adminContainer {
+    padding: 15px;
+  }
+
+  .content {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .sidePanel {
+    flex: none;
+    height: 400px;
+  }
+
+  .mainPanel {
+    min-height: 400px;
+  }
+
+  .title {
+    font-size: 2em;
+  }
+
+  .panelHeader {
+    padding: 15px 20px;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .adminContainer {
+    padding: 10px;
+  }
+
+  .header {
+    margin-bottom: 20px;
+  }
+
+  .title {
+    font-size: 1.8em;
+  }
+
+  .subtitle {
+    font-size: 1em;
+  }
+
+  .sidePanel,
+  .mainPanel {
+    border-radius: 10px;
+  }
+}
+
+.sidePanel::-webkit-scrollbar,
+.mainPanel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidePanel::-webkit-scrollbar-track,
+.mainPanel::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.sidePanel::-webkit-scrollbar-thumb,
+.mainPanel::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.sidePanel::-webkit-scrollbar-thumb:hover,
+.mainPanel::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}

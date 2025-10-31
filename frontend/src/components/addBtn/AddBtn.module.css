@@ -1,41 +1,76 @@
 .uploadContainer {
-    margin: 16px 0;
+    margin: 0;
+}
 
+.uploadCard {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e1e5e9;
+    overflow: hidden;
+}
+
+.cardHeader {
+    padding: 25px 30px 20px 30px;
+    border-bottom: 1px solid #e2e8f0;
+    background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);
+}
+
+.cardTitle {
+    color: #2d3748;
+    font-size: 1.3em;
+    font-weight: 600;
+    margin: 0 0 5px 0;
+    background: linear-gradient(135deg, #4299e1, #667eea);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.cardSubtitle {
+    color: #4a5568;
+    font-size: 0.9em;
+    margin: 0;
+    opacity: 0.8;
 }
 
 .uploadForm {
-    margin-bottom: 16px;
+    padding: 25px 30px;
 }
 
-.btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #007bff;
+.uploadButton {
+    display: block;
+    position: relative;
+    background: #4299e1;
     color: white;
-    padding: 12px 24px;
+    padding: 16px 24px;
     border-radius: 8px;
     cursor: pointer;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    border: 2px solid transparent;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 2px dashed transparent;
+    overflow: hidden;
 }
 
-.btn:hover {
-    background: #0056b3;
+.uploadButton:hover:not(.uploadButtonDisabled) {
+    background: #3182ce;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    box-shadow: 0 4px 12px rgba(66, 153, 225, 0.3);
 }
 
-.btnDisabled {
-    background: #6c757d;
+.uploadButton:active:not(.uploadButtonDisabled) {
+    transform: translateY(0);
+}
+
+.uploadButtonDisabled {
+    background: #a0aec0;
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
 }
 
-.btnDisabled:hover {
-    background: #6c757d;
+.uploadButtonDisabled:hover {
+    background: #a0aec0;
     transform: none;
     box-shadow: none;
 }
@@ -44,12 +79,46 @@
     display: none;
 }
 
+.buttonContent {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    z-index: 2;
+}
+
+.buttonIcon {
+    font-size: 1.2em;
+}
+
+.buttonText {
+    font-size: 1em;
+}
+
+.buttonProgress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 0 0 8px 8px;
+    overflow: hidden;
+}
+
+.buttonProgress .progressBar {
+    height: 100%;
+    background: #ffffff;
+    transition: width 0.3s ease;
+    border-radius: 0 0 8px 8px;
+}
+
 .fileInfoPanel {
-    background: #f8f9fa;
-    border: 1px solid #e9ecef;
-    border-radius: 12px;
-    padding: 0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 30px 25px 30px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
     animation: slideDown 0.3s ease;
 }
 
@@ -69,120 +138,147 @@
     justify-content: space-between;
     align-items: center;
     padding: 16px 20px;
-    background: white;
-    border-bottom: 1px solid #e9ecef;
-    border-radius: 12px 12px 0 0;
+    background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.panelTitle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     font-weight: 600;
-    color: #212529;
+    color: #2d3748;
+    font-size: 0.95em;
+}
+
+.panelIcon {
+    font-size: 1.1em;
 }
 
 .closeButton {
     background: none;
     border: none;
-    font-size: 1.2rem;
+    font-size: 1.1em;
     cursor: pointer;
-    color: #6c757d;
+    color: #a0aec0;
     padding: 4px 8px;
     border-radius: 4px;
-    transition: background-color 0.2s;
+    transition: all 0.2s ease;
+    line-height: 1;
 }
 
 .closeButton:hover {
-    background-color: #f8f9fa;
-    color: #dc3545;
+    background: #fed7d7;
+    color: #e53e3e;
 }
 
 .fileInfo {
     padding: 20px;
-    background: white;
-    margin: 0;
+    background: #ffffff;
 }
 
-.infoRow {
+.infoGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.infoItem {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 8px 0;
-    border-bottom: 1px solid #f8f9fa;
+    align-items: flex-start;
+    gap: 15px;
 }
 
-.infoRow:last-child {
-    border-bottom: none;
-}
-
-.label {
+.infoLabel {
     font-weight: 600;
-    color: #495057;
+    color: #4a5568;
+    font-size: 0.9em;
     min-width: 80px;
+    flex-shrink: 0;
 }
 
-.value {
-    color: #212529;
+.infoValue {
+    color: #2d3748;
     text-align: right;
-    word-break: break-all;
-    max-width: 60%;
+    word-break: break-word;
+    font-size: 0.9em;
+    flex: 1;
 }
 
 .progressSection {
     padding: 20px;
-    background: white;
-    border-top: 1px solid #e9ecef;
+    background: #ffffff;
+    border-top: 1px solid #e2e8f0;
+}
+
+.progressContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .progressBar {
     width: 100%;
-    height: 8px;
-    background: #e9ecef;
-    border-radius: 4px;
+    height: 6px;
+    background: #e2e8f0;
+    border-radius: 3px;
     overflow: hidden;
-    margin-bottom: 8px;
 }
 
 .progressFill {
     height: 100%;
-    background: linear-gradient(90deg, #007bff, #0056b3);
-    border-radius: 4px;
+    background: linear-gradient(90deg, #4299e1, #667eea);
+    border-radius: 3px;
     transition: width 0.3s ease;
 }
 
 .progressText {
     text-align: center;
-    color: #6c757d;
-    font-size: 0.9rem;
+    color: #4a5568;
+    font-size: 0.85em;
+    font-weight: 500;
 }
 
 .commentSection {
     padding: 20px;
-    background: white;
-    border-top: 1px solid #e9ecef;
-    border-radius: 0 0 12px 12px;
+    background: #ffffff;
+    border-top: 1px solid #e2e8f0;
 }
 
 .commentLabel {
     display: block;
     font-weight: 600;
-    color: #495057;
-    margin-bottom: 8px;
+    color: #2d3748;
+    margin-bottom: 12px;
+    font-size: 0.9em;
 }
 
 .commentInput {
     width: 100%;
-    padding: 5px;
+    padding: 12px 16px;
     box-sizing: border-box;
-    border: 1px solid #ced4da;
+    border: 1px solid #e2e8f0;
     border-radius: 6px;
     font-family: inherit;
-    font-size: 0.9rem;
+    font-size: 0.9em;
     resize: vertical;
     min-height: 80px;
-    margin-bottom: 16px;
-    transition: border-color 0.2s;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+    background: #fafbfc;
+    color: #2d3748;
 }
 
 .commentInput:focus {
     outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+    border-color: #4299e1;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+}
+
+.commentInput::placeholder {
+    color: #a0aec0;
 }
 
 .commentActions {
@@ -191,44 +287,104 @@
     justify-content: flex-end;
 }
 
-.uploadButton {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #28a745;
+.cancelButton {
+    background: #a0aec0;
     color: white;
     border: none;
     padding: 10px 20px;
     border-radius: 6px;
     cursor: pointer;
     font-weight: 500;
-    transition: background-color 0.2s;
+    transition: all 0.3s ease;
+    font-size: 0.9em;
 }
 
-.uploadButton:hover:not(:disabled) {
-    background: #218838;
+.cancelButton:hover {
+    background: #718096;
+    transform: translateY(-1px);
 }
 
-.uploadButton:disabled {
-    background: #6c757d;
-    cursor: not-allowed;
-}
-
-.cancelButton {
-    background: #6c757d;
+.confirmButton {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #38a169;
     color: white;
     border: none;
     padding: 10px 20px;
     border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.2s;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    font-size: 0.9em;
 }
 
-.cancelButton:hover:not(:disabled) {
-    background: #545b62;
+.confirmButton:hover {
+    background: #2f855a;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(56, 161, 105, 0.3);
 }
 
-.cancelButton:disabled {
-    background: #adb5bd;
-    cursor: not-allowed;
+.confirmIcon {
+    font-size: 1em;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .uploadCard {
+        margin: 0 -15px;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+    }
+
+    .cardHeader {
+        padding: 20px;
+    }
+
+    .uploadForm {
+        padding: 20px;
+    }
+
+    .fileInfoPanel {
+        margin: 0 20px 20px 20px;
+    }
+
+    .commentActions {
+        flex-direction: column-reverse;
+    }
+
+    .cancelButton,
+    .confirmButton {
+        flex: 1;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .infoItem {
+        flex-direction: column;
+        gap: 5px;
+        align-items: flex-start;
+    }
+
+    .infoLabel,
+    .infoValue {
+        text-align: left;
+        min-width: auto;
+    }
+
+    .infoValue {
+        flex: none;
+    }
+
+    .panelHeader {
+        padding: 12px 16px;
+    }
+
+    .fileInfo,
+    .progressSection,
+    .commentSection {
+        padding: 16px;
+    }
 }

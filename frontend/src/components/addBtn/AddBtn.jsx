@@ -62,7 +62,6 @@ export const AddBtn = () => {
             console.log('Файл успешно загружен:', response.data);
             getFiles(FILES, dispatch, setListFile);
 
-
             handleCancelUpload();
 
         } catch (error) {
@@ -82,94 +81,123 @@ export const AddBtn = () => {
 
     return (
         <div className={S.uploadContainer}>
-            <form className={S.uploadForm}>
-                <label className={`${S.btn} ${uploading ? S.btnDisabled : ''}`}>
-                    📁 {uploading ? `Загрузка... ${uploadProgress}%` : 'Выберите файл'}
-                    <input
-                        type='file'
-                        className={S.fileInput}
-                        onChange={handleFileSelect}
-                        disabled={uploading}
-                    />
-                </label>
-            </form>
+            <div className={S.uploadCard}>
+                <div className={S.cardHeader}>
+                    <h3 className={S.cardTitle}>Загрузка файлов</h3>
+                    <p className={S.cardSubtitle}>Выберите файл для загрузки в систему</p>
+                </div>
 
-            {(selectedFile || uploading) && (
-                <div className={S.fileInfoPanel}>
-                    <div className={S.panelHeader}>
-                        <span>Загрузка файла</span>
-                        {!uploading && (
-                            <button
-                                className={S.closeButton}
-                                onClick={handleCancelUpload}
-                            >
-                                ✕
-                            </button>
-                        )}
-                    </div>
-
-                    <div className={S.fileInfo}>
-                        <div className={S.infoRow}>
-                            <span className={S.label}>Имя файла:</span>
-                            <span className={S.value}>{selectedFile?.name}</span>
+                <form className={S.uploadForm}>
+                    <label className={`${S.uploadButton} ${uploading ? S.uploadButtonDisabled : ''}`}>
+                        <input
+                            type='file'
+                            className={S.fileInput}
+                            onChange={handleFileSelect}
+                            disabled={uploading}
+                        />
+                        <div className={S.buttonContent}>
+                            <span className={S.buttonIcon}>📁</span>
+                            <span className={S.buttonText}>
+                                {uploading ? `Загрузка... ${uploadProgress}%` : 'Выберите файл'}
+                            </span>
                         </div>
-                        <div className={S.infoRow}>
-                            <span className={S.label}>Размер:</span>
-                            <span className={S.value}>{formatFileSize(selectedFile?.size)}</span>
-                        </div>
-                        <div className={S.infoRow}>
-                            <span className={S.label}>Тип:</span>
-                            <span className={S.value}>{selectedFile?.type || 'Неизвестно'}</span>
-                        </div>
-                    </div>
-
-                    {uploading && (
-                        <div className={S.progressSection}>
-                            <div className={S.progressBar}>
+                        {uploading && (
+                            <div className={S.buttonProgress}>
                                 <div
-                                    className={S.progressFill}
-                                    style={{ width: `${uploadProgress}%` }}
+                                    className={S.progressBar}
+                                    style={{width: `${uploadProgress}%`}}
                                 ></div>
                             </div>
-                            <div className={S.progressText}>
-                                {uploadProgress < 100 ? 'Загрузка...' : 'Обработка...'}
-                            </div>
-                        </div>
-                    )}
+                        )}
+                    </label>
+                </form>
 
-                    {showCommentInput && !uploading && (
-                        <div className={S.commentSection}>
-                            <label className={S.commentLabel}>
-                                Комментарий (необязательно):
-                            </label>
-                            <textarea
-                                value={comment}
-                                onChange={handleCommentChange}
-                                className={S.commentInput}
-                                placeholder="Добавьте комментарий к файлу..."
-                                rows="3"
-                                maxLength="500"
-                            />
-                            <div className={S.commentActions}>
+                {(selectedFile || uploading) && (
+                    <div className={S.fileInfoPanel}>
+                        <div className={S.panelHeader}>
+                            <div className={S.panelTitle}>
+                                <span className={S.panelIcon}>📄</span>
+                                Информация о файле
+                            </div>
+                            {!uploading && (
                                 <button
-                                    onClick={handleFileUpload}
-                                    className={S.uploadButton}
-                                    disabled={uploading}
-                                >
-                                    📤 Загрузить
-                                </button>
-                                <button
+                                    className={S.closeButton}
                                     onClick={handleCancelUpload}
-                                    className={S.cancelButton}
-                                    disabled={uploading}
+                                    type="button"
                                 >
-                                    Отмена
+                                    ✕
                                 </button>
+                            )}
+                        </div>
+
+                        <div className={S.fileInfo}>
+                            <div className={S.infoGrid}>
+                                <div className={S.infoItem}>
+                                    <span className={S.infoLabel}>Имя файла:</span>
+                                    <span className={S.infoValue}>{selectedFile?.name}</span>
+                                </div>
+                                <div className={S.infoItem}>
+                                    <span className={S.infoLabel}>Размер:</span>
+                                    <span className={S.infoValue}>{formatFileSize(selectedFile?.size)}</span>
+                                </div>
+                                <div className={S.infoItem}>
+                                    <span className={S.infoLabel}>Тип:</span>
+                                    <span className={S.infoValue}>{selectedFile?.type || 'Неизвестно'}</span>
+                                </div>
                             </div>
                         </div>
-                    )}
-                </div>
-            )}
+
+                        {uploading && (
+                            <div className={S.progressSection}>
+                                <div className={S.progressContainer}>
+                                    <div className={S.progressBar}>
+                                        <div
+                                            className={S.progressFill}
+                                            style={{ width: `${uploadProgress}%` }}
+                                        ></div>
+                                    </div>
+                                    <div className={S.progressText}>
+                                        {uploadProgress < 100 ? 'Загрузка...' : 'Обработка...'}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {showCommentInput && !uploading && (
+                            <div className={S.commentSection}>
+                                <label className={S.commentLabel}>
+                                    Комментарий к файлу (необязательно)
+                                </label>
+                                <textarea
+                                    value={comment}
+                                    onChange={handleCommentChange}
+                                    className={S.commentInput}
+                                    placeholder="Опишите назначение файла или добавьте заметку..."
+                                    rows="3"
+                                    maxLength="500"
+                                />
+                                <div className={S.commentActions}>
+                                    <button
+                                        onClick={handleCancelUpload}
+                                        className={S.cancelButton}
+                                        type="button"
+                                    >
+                                        Отмена
+                                    </button>
+                                    <button
+                                        onClick={handleFileUpload}
+                                        className={S.confirmButton}
+                                        type="button"
+                                    >
+                                        <span className={S.confirmIcon}>📤</span>
+                                        Сохранить
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

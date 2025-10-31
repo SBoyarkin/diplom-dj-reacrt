@@ -26,8 +26,7 @@ export const FileList = ({ selectedUser, userFiles }) => {
     return (
         <div className={S.filesSection}>
             <h2 className={S.sectionTitle}>
-                Файлы пользователя: {selectedUser.username},
-                количество {countFiles},
+                Количество {countFiles},
                 объем {formatFileSize(countSizeFile)}
             </h2>
 

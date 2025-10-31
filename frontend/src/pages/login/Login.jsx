@@ -64,13 +64,16 @@ export const Login = () => {
     return (
         <>
             <div className={S.main}>
-                <h1 className={S.h1}>Добро пожаловать в файлообменник,  вы можете передавать файлы по ссыле загружая в эту систему, перед тем как начать пользоваться, зарегистрируйтесь!!</h1>
-                <div className={S.left}>
+                <div className={S.welcomeSection}>
+                    <h1 className={S.welcomeTitle}>Добро пожаловать в файлообменник</h1>
+                    <p className={S.welcomeText}>
+                        Вы можете передавать файлы по ссылке, загружая их в нашу систему.
+                        Перед тем как начать пользоваться, войдите в свою учетную запись!
+                    </p>
                 </div>
-                <div className={S.right}>
+                <div className={S.formSection}>
                     <form name='login' className={S.form} onSubmit={submitLogin}>
-                        <div className={S.title}>Добро пожаловать</div>
-
+                        <div className={S.title}>Вход в систему</div>
 
                         {error && (
                             <div className={S.error}>
@@ -101,7 +104,11 @@ export const Login = () => {
                         >
                             {loading ? 'Вход...' : 'Войти'}
                         </button>
-                        <Link to={'/sign'}>Регистрация</Link>
+
+                        <div className={S.linkContainer}>
+                            <span className={S.linkText}>Нет учетной записи?</span>
+                            <Link to={'/sign'} className={S.link}>Регистрация</Link>
+                        </div>
                     </form>
                 </div>
             </div>
